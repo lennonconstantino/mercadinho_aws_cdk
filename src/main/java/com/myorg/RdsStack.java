@@ -44,7 +44,7 @@ public class RdsStack extends Stack {
                 .credentials(Credentials.fromUsername("admin", CredentialsFromUsernameOptions.builder()
                         .password(SecretValue.plainText(databasePassword.getValueAsString()))
                                 .build()))
-                .instanceType(InstanceType.of(InstanceClass.BURSTABLE2, InstanceSize.MICRO))
+                .instanceType(InstanceType.of(InstanceClass.BURSTABLE3, InstanceSize.MICRO)) // MICRO
                 .multiAz(false)
                 .allocatedStorage(10)
                 .securityGroups(Collections.singletonList(iSecurityGroup))
@@ -63,7 +63,7 @@ public class RdsStack extends Stack {
 
         // exportando a senha
         CfnOutput.Builder.create(this, "rds-password")
-                .exportName("rds-rds-password")
+                .exportName("rds-password")
                 .value(databasePassword.getValueAsString())
                 .build();
     }
