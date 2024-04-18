@@ -21,6 +21,9 @@ public class MercadinhoAwsCdkApp {
         RdsStack rdsStack = new RdsStack(app, "Rds", vpcStack.getVpc());
         rdsStack.addDependency(vpcStack);
 
+        // 07
+        SnsStack snsStack = new SnsStack(app, "Sns");
+
         // 05.01 Deployment dos recursos
         // a stack de servico depende do cluster e do vpc
         Service01Stack service01Stack = new Service01Stack(app, "Service01", clusterStack.getCluster());
