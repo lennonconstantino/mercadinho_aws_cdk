@@ -12,13 +12,13 @@ import software.constructs.Construct;
 public class SnsStack extends Stack {
     private final SnsTopic productEventsTopic;
 
-    public SnsStack(final Construct scope, final String id, SnsTopic productEventsTopic) {
-        this(scope, id, null, productEventsTopic);
+    public SnsStack(final Construct scope, final String id) {
+        this(scope, id, null);
     }
 
-    public SnsStack(final Construct scope, final String id, final StackProps props, SnsTopic productEventsTopic) {
+    public SnsStack(final Construct scope, final String id, final StackProps props) {
         super(scope, id, props);
-        this.productEventsTopic = productEventsTopic;
+        //this.productEventsTopic = productEventsTopic;
 
         productEventsTopic = SnsTopic.Builder.create(Topic.Builder.create(this, "ProductEventsTopic")
                 .topicName("product-events")
