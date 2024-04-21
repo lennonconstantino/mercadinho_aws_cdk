@@ -31,6 +31,9 @@ public class MercadinhoAwsCdkApp {
         service01Stack.addDependency(rdsStack);
         service01Stack.addDependency(snsStack);
 
+        // 10 criando o serviço 2
+        Service02Stack service02Stack = new Service02Stack(app, "Service02", clusterStack.getCluster());
+
         app.synth();
     }
 }
