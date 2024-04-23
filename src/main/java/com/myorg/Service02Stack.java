@@ -96,5 +96,8 @@ public class Service02Stack extends Stack {
                 .scaleInCooldown(Duration.seconds(60))
                 .scaleOutCooldown(Duration.seconds(60)) // periodo de analise para destruir a instancia
                 .build());
+
+        // Atribuir permissao para o service acessar a fila
+        productEventsQueue.grantConsumeMessages(service02.getTaskDefinition().getTaskRole());
     }
 }
