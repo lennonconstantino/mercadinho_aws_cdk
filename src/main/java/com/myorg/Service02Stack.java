@@ -2,6 +2,7 @@ package com.myorg;
 
 import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.applicationautoscaling.EnableScalingProps;
+import software.amazon.awscdk.services.dynamodb.Table;
 import software.amazon.awscdk.services.ecs.*;
 import software.amazon.awscdk.services.ecs.patterns.ApplicationLoadBalancedFargateService;
 import software.amazon.awscdk.services.ecs.patterns.ApplicationLoadBalancedTaskImageOptions;
@@ -20,11 +21,11 @@ import java.util.Map;
 // import software.amazon.awscdk.services.sqs.Queue;
 
 public class Service02Stack extends Stack {
-    public Service02Stack(final Construct scope, final String id, Cluster cluster, SnsTopic productEventsTopic) {
-        this(scope, id, null, cluster, productEventsTopic);
+    public Service02Stack(final Construct scope, final String id, Cluster cluster, SnsTopic productEventsTopic, Table productEventsDdb) {
+        this(scope, id, null, cluster, productEventsTopic, productEventsDdb);
     }
 
-    public Service02Stack(final Construct scope, final String id, final StackProps props, Cluster cluster, SnsTopic productEventsTopic) {
+    public Service02Stack(final Construct scope, final String id, final StackProps props, Cluster cluster, SnsTopic productEventsTopic, Table productEventsDdb) {
         super(scope, id, props);
 
         Queue productEventsDlq = Queue.Builder.create(this, "ProductEventsDlq")
@@ -66,7 +67,7 @@ public class Service02Stack extends Stack {
                 .taskImageOptions(
                         ApplicationLoadBalancedTaskImageOptions.builder()
                                 .containerName("aws_project02")
-                                .image(ContainerImage.fromRegistry("lennomolliver/mercadinho02:0.0.2-SNAPSHOT"))
+                                .image(ContainerImage.fromRegistry("lennomolliver/mercadinho02:0.0.3-SNAPSHOT"))
                                 .containerPort(9090)
                                 .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
                                         .logGroup(LogGroup.Builder.create(this, "Service02LogGroup")
@@ -99,5 +100,8 @@ public class Service02Stack extends Stack {
 
         // Atribuir permissao para o service acessar a fila
         productEventsQueue.grantConsumeMessages(service02.getTaskDefinition().getTaskRole());
+
+        // Atribuir permissao para o service acessar o table dynamo
+        productEventsDdb.grantReadWriteData(service02.getTaskDefinition().getTaskRole());
     }
 }
