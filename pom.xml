@@ -44,6 +44,19 @@
             <version>${cdk.version}</version>
         </dependency>
 
+<!--        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>dynamodb</artifactId>
+            <version>1.83.0</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.11.784</version>
+        </dependency>
+
+
 <!--        <dependency>-->
 <!--            <groupId>software.amazon.awscdk</groupId>-->
 <!--            <artifactId>ec2</artifactId>-->

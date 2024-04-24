@@ -31,10 +31,14 @@ public class MercadinhoAwsCdkApp {
         service01Stack.addDependency(rdsStack);
         service01Stack.addDependency(snsStack);
 
+        // 11 criando o dynamodb
+        DynamodbStack dynamodbStack = new DynamodbStack(app, "Dynamodb");
+
         // 10 criando o serviço 2
         Service02Stack service02Stack = new Service02Stack(app, "Service02", clusterStack.getCluster(), snsStack.getProductEventsTopic());
         service02Stack.addDependency(snsStack);
         service02Stack.addDependency(clusterStack);
+        service02Stack.addDependency(dynamodbStack);
 
         app.synth();
     }
