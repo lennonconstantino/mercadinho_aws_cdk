@@ -45,7 +45,7 @@ public class Service01Stack extends Stack {
                         // 01 - aqui definimos qual vai ser a imagem que vai ser utilizada dentro do nosso serviço
                         ApplicationLoadBalancedTaskImageOptions.builder()
                                 .containerName("aws_project01")
-                                .image(ContainerImage.fromRegistry("lennomolliver/mercadinho:0.0.5-SNAPSHOT"))
+                                .image(ContainerImage.fromRegistry("lennomolliver/mercadinho:0.0.6-SNAPSHOT"))
                                 .containerPort(8080)
                                 .logDriver(LogDriver.awsLogs(AwsLogDriverProps.builder()
                                         .logGroup(LogGroup.Builder.create(this, "Service01LogGroup")
