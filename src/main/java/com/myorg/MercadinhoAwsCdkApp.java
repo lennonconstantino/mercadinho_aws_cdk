@@ -24,9 +24,17 @@ public class MercadinhoAwsCdkApp {
         // 07
         SnsStack snsStack = new SnsStack(app, "Sns");
 
+        InvoiceAppStack invoiceAppStack = new InvoiceAppStack(app, "InvoiceApp");
+
         // 05.01 Deployment dos recursos
         // a stack de servico depende do cluster e do vpc
-        Service01Stack service01Stack = new Service01Stack(app, "Service01", clusterStack.getCluster(), snsStack.getProductEventsTopic());
+        Service01Stack service01Stack = new Service01Stack(app
+                , "Service01"
+                , clusterStack.getCluster()
+                , snsStack.getProductEventsTopic()
+                , invoiceAppStack.getBucket()
+                , invoiceAppStack.getS3InvoiceQueue()
+        );
         service01Stack.addDependency(clusterStack);
         service01Stack.addDependency(rdsStack);
         service01Stack.addDependency(snsStack);
